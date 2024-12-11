@@ -25,11 +25,13 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // makes enemy entity move towards players position
         Vector3 direction = (player.transform.position - transform.position).normalized;
-        
+
         enemyRb.MovePosition(transform.position + (direction * speed * Time.deltaTime));
 
         float currentTime = Time.time;
+        // plays footsteps sound effect
         if (currentTime > nextStep + lastStep){
                 enemySound.PlayOneShot(eFootStep, 0.5f);
                 lastStep = Time.time;
@@ -38,5 +40,4 @@ public class Enemy : MonoBehaviour
     }
 
 }
-
 

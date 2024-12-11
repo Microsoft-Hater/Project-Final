@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour{
 
 	private float mouseX = 0;
 	private float mouseY = 0;
-	private float mouseLimit = 18.0f;
+	private float mouseLimit = 45.0f;
 	public float mouseSpeed;
 
 	private Rigidbody playerRb;

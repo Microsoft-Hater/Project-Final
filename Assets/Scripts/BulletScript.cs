@@ -15,7 +15,7 @@ public class BulletScript : MonoBehaviour{
     void Start(){
 		// Setting playerObject To The Player
 		playerObject = GameObject.Find("Player");
-		audioSource = GetComponent<AudioSource>();
+		audioSource = playerObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -35,8 +35,9 @@ public class BulletScript : MonoBehaviour{
     private void OnTriggerEnter(Collider other){
 		// If Statement That Runs If The Bullet Collides With An Object With The Enemy Tag
 		// It Destroys The Bullet And Enemy
+		// It Also Plays The Death Sound Effect And Particle Effects On Trigger 
 		if (other.gameObject.CompareTag("Enemy")){
-			audioSource.PlayOneShot(deathSound, 10.0f);
+			audioSource.PlayOneShot(deathSound, 1.0f);
 			Instantiate(enDeath, other.gameObject.transform.position, enDeath.transform.rotation);
 			Destroy(gameObject);
 			Destroy(other.gameObject);

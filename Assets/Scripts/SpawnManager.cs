@@ -11,28 +11,30 @@ public class SpawnManager : MonoBehaviour {
     private float spawnRangeZ = 20;
     // public GameObject powerupPrefab;
     public GameObject enemiesPrefab;
-    // will turn this into an array to have multiple items for cover
-    // public GameObject coverPrefab;
+
     public TMP_Text countdownText;
     public int enemyAlive;
     public int waveNum = 1;
     private bool isCountdownActive = false;
     public TMP_Text titleText;
+    public Toggle muteAudioText;
     public Button startButton;
     public bool isGameActive = false;
 
 
     void Start() {
+        // when game is loaded, displayStartText method is run
         DisplayStartText();
     }
 
     void Update() {
 
+        // debug mode that was used in alpha and final for wave testing
         // FOR DEBUG, TURN OFF WHEN ALPHA IS DONE
         // spawns enemy by pressing E, runs SpawnEnemy method, may be temporary as enemies will spawn on timer or waves
-        if(Input.GetKeyDown(KeyCode.E)) {
-            SpawnEnemy(1);
-        }
+        //if(Input.GetKeyDown(KeyCode.E)) {
+        //    SpawnEnemy(1);
+        //}
 
         if(isGameActive == true) {
         // enemyAlive checks if there are any enemies alive, if not, it will spawn a new wave of enemies
@@ -76,22 +78,27 @@ public class SpawnManager : MonoBehaviour {
         {
             // changes text in unity's TMP Text to the following with i(second)
             countdownText.text = $"Next wave in: {i}";
-            yield return new WaitForSeconds(1); 
+            yield return new WaitForSeconds(1);
         }
 
-        // after, text is set to "invisable" and new wave is spawned in
-        countdownText.text = ""; 
+        // after, text is set to "invisible" and new wave is spawned in
+        countdownText.text = "";
         waveNum++;
         SpawnEnemy(enemiesToSpawn);
     }
 
+// shows start button, the option to mute audio and title of game
     void DisplayStartText() {
+        muteAudioText.gameObject.SetActive(true);
         startButton.gameObject.SetActive(true);
         titleText.gameObject.SetActive(true);
     }
 
+    // once the start button is pressed, the game starts, hiding everything from displayStartText and spawn the first wave
     public void StartGame() {
         isGameActive = true;
+		Cursor.lockState = CursorLockMode.Locked;
+        muteAudioText.gameObject.SetActive(false);
         startButton.gameObject.SetActive(false);
         titleText.gameObject.SetActive(false);
         SpawnEnemy(waveNum);
